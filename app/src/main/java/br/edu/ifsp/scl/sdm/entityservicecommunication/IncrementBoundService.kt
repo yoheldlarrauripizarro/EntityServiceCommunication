@@ -19,10 +19,12 @@ class IncrementBoundService : Service() {
             msg.replyTo?.also{
                 clientMessenger = it
             }
-            
-            msg.data.getInt("VALUE").also {
-                Log.v(this.javaClass.simpleName,"Returning incremented value")
-                clientMessenger.send(Message.obtain().apply { data.putInt("VALUE",it + 1) })
+
+            msg.data.getInt("VALUE", -1).also {
+                if(it !=-1){
+                    Log.v(this.javaClass.simpleName,"Returning incremented value")
+                    clientMessenger.send(Message.obtain().apply { data.putInt("VALUE",it + 1) })
+                }
             }
         }
     }
